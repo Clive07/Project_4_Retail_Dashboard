@@ -23,7 +23,7 @@ The entirety of this project is solely for educational purposes in order to test
 ### Technologies Used & Designing
 
 - 
-- Miro
+- Miro/Draw.io
 - VS-Code
 - Github
 - Heroku
@@ -47,7 +47,13 @@ URL:
 
 ### List Of Known Issues
 
-
+product_lists.csv file had one error with the product categories. One fruit and veg entry didn't have an s at the end. I amended this manually but if time allows I will see if I can create the code which fixes these potential issues for me
 
 ### Lessons Learnt
 
+
+
+### Notes for found code
+
+https://www.geeksforgeeks.org/how-to-iterate-over-files-in-directory-using-python/
+https://petl.readthedocs.io/en/stable/_modules/petl/transform/basics.html#addfieldusingcontext
