@@ -57,3 +57,4 @@ product_lists.csv file had one error with the product categories. One fruit and 
 
 https://www.geeksforgeeks.org/how-to-iterate-over-files-in-directory-using-python/
 https://petl.readthedocs.io/en/stable/_modules/petl/transform/basics.html#addfieldusingcontext
+https://tutorialdeep.com/knowhow/round-float-to-2-decimal-places-python/
