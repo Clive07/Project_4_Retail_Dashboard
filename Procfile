@@ -1,1 +1,0 @@
-web: gunicorn class_1:server
