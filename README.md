@@ -59,3 +59,28 @@ https://www.geeksforgeeks.org/how-to-iterate-over-files-in-directory-using-pytho
 https://petl.readthedocs.io/en/stable/_modules/petl/transform/basics.html#addfieldusingcontext
 https://tutorialdeep.com/knowhow/round-float-to-2-decimal-places-python/
 https://stackoverflow.com/questions/42504984/python-pandas-select-both-head-and-tail
+https://www.sharpsightlabs.com/blog/pandas-unique/
+
+
+indexing:
+
+does it have to be unique?
+
+when creating or initialising a df or table it seems to be
+a requirement
+
+but once made I can set it to any col and then it can be duplications?
+
+I wanted to index a large group file by the region and then the city within those regions.
+
+I assume it will be a smaller file as I wish to have 3 or 5 files that I pull from to then acquire all the needed results from the data
+
+can I set an index while in etl to potentially speed up the transition to a df?
+
+or perhaps can I segment the df based on the city and/or region?
+
+due to forgetting about duplicates... my 2010 file has a 2011 city, how can I best drop that one?
+
+random:
+
+how can I highlight all things and indent them together or backspace them etc
