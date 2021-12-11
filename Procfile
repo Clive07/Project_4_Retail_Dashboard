@@ -1,1 +1,1 @@
-web: gunicorn class_1:server
+web: gunicorn data_dashboard:server
