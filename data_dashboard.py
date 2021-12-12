@@ -86,7 +86,7 @@ worst_profit_figure = ex.bar(worst_profiting_branches,
 # INITIALISATION
 
 app = dash.Dash(
-    __name__,
+    '',
     # connect to one of bootstrap themes otherwise it won't work
     # added meta_tags to try and be more mobile friendly 
     external_stylesheets=[dbc.themes.BOOTSTRAP],
