@@ -1,1 +1,1 @@
-web: gunicorn data_dashboard:server
+web: gunicorn data_dashboard.py:server
