@@ -1,8 +1,8 @@
-  #------------------------
-  #
-  #       imports
-  # 
-  #------------------------
+#------------------------
+#
+#       imports
+# 
+#------------------------
   
 # import kept due to lack of time and uncertainty about it
 from os import name
@@ -21,11 +21,11 @@ import pandas as pd
 # petl as etl
 import petl as etl
 
-  #------------------------
-  #
-  #       variables
-  #
-  #------------------------
+#------------------------
+#
+#       variables
+#
+#------------------------
   
 # file path to the result files
 results_path = 'data/refined/results/'
