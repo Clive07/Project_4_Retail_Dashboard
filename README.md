@@ -20,6 +20,8 @@ Then once this information has been assertained it was deployed on heroku to be 
 
 The entirety of this project is solely for educational purposes in order to test my skills with the specific technologies used.
 
+It should be noted that the MAIN branch only contains this readme file. the CLEANUP branch holds the first half of this project whilst the DEPLOYMENT branch contains the second half... the dashboard itself.
+
 ### Technologies Used & Designing
 
 - Classic pen & paper
@@ -34,7 +36,7 @@ The entirety of this project is solely for educational purposes in order to test
     - dash bootstrap
  
 The other packages used can be seen within the requirements.txt file kept within the deployment branch.
-It should be noted that the pywin32 package was removed to allowd the heroku deployment to work.
+It should be noted that the pywin32 package was removed to allow the heroku deployment to work.
 
 VS Code was the code editor used for this project.
 Github held the repository which links to Heroku for the deployment.
@@ -69,12 +71,15 @@ product_lists.csv file had one error with the product categories. One fruit and 
 
 The dashboard is not as mobile friendly as I would have liked it to be. 
 
-The results able to be viewed... I believe it is what was asked but I could have gone further by expanding from just overall to yearly statistics too.
+The results are able to be viewed... I believe it is what was asked but I could have gone further by expanding from just overall to yearly statistics too. The charts themselves as well could have done with more finetuning to make them easier to understand. One example of something like this would be to of added pull or explode attribute to the pie chart which would make it much easier to point out the most profitable hour, branch or region ect.
 
-The cleanup and manipulation sections could have been better. They do indeed work.. however it takes a considerably amount of time for the cleanup section to occur.
-I have narrowed it down to when I convert a petl table to a pandas dataframe. My solution to this is to see if it's possible to do everything with petl and then save as csv files instead of converting to a df before converting. Or perhaps instead flip it to see how possible it was to do everything using pandas only since it is a much faster package when compared to petl.
+The cleanup and manipulation sections could have been better. They do indeed work.. however initially it would take over 3 hours due to me converting from etl table to a pandas dataframe. This was curved down to half this time thanks to instead saving from etl a csv file and them with pandas reading this file instead of converting. I do still believe I could have refined this even further by perhaps using pandas as much as possible instead of using petl. Petl is certainly useful but due to its slow nature it makes pandas more desirable.
 
 The graphs on the dashboard are indeed nice but due to my lack of knowledge using them I feel like they are lacking somewhat. It would have been quite nice as the user to request which chart the data will be presented as whilst also picking multiple counties or regions to compare against one another. Alas with time and other more pressing bugs and tweaks this was put on the back burner.
+
+I wasn't able to go as extensive with this data as I wanted to be. The brief only ever asked for overall and not yearly but I was initially attempting to give these finer results. However I think I bit off more than I could chew attempting to get all of this data at once. Instead I should have focused on the minimum and then looked to see how more specific with the results I could go.
+
+
 
 ### Lessons Learnt
 
@@ -86,6 +91,12 @@ The graphs on the dashboard are indeed nice but due to my lack of knowledge usin
     Now... while that is true it is also important for myself to note how it must be a **disciplined** break. Don't step away for too long otherwise the productive mindset fades away and also you are losing precious time.
     
     The balance for the most efficiency is always difficult but important to remember.
+    
+ Overall I believe the project went reasonably well however in hindsight...
+
+My desire to be able to iterate through all the raw and then refined files held me back a little bit. I would get overwhelmed a little by the thought of having to grab each result from each branch and but them together.
+
+If I instead focused on one branch and acquired the data I wanted from it successfully i.e. the overall stats as well as yearly. I could have then expanded this by simply putting it within a for loop. Instead I pretty much started with the loop and this caused initially skewey results which slowed down progress.
   
   
 
