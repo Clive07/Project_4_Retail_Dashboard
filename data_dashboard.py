@@ -3,9 +3,6 @@
 #       imports
 # 
 #------------------------
-  
-# import kept due to lack of time and uncertainty about it
-from os import name
 # dash
 import dash
 # dash bootstrap components
