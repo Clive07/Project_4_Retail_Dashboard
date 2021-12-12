@@ -1,6 +1,11 @@
-#------------------------
-#       imports
-#------------------------
+  #------------------------
+  #
+  #       imports
+  # 
+  #------------------------
+  
+# import kept due to lack of time and uncertainty about it
+from os import name
 # dash
 import dash
 # dash bootstrap components
@@ -16,13 +21,16 @@ import pandas as pd
 # petl as etl
 import petl as etl
 
-#------------------------
-#       variables
-#------------------------
+  #------------------------
+  #
+  #       variables
+  #
+  #------------------------
+  
 # file path to the result files
 results_path = 'data/refined/results/'
 
-# READ CSV FILES
+# READING CSV FILES
 
 # product results via region
 regional_products_df = pd.read_csv(f'{results_path}products_regional.csv')
@@ -50,6 +58,9 @@ profit_df = pd.read_csv(f'{results_path}top10_bottom10_profitable_counties.csv')
 best_profiting_branches = profit_df.head(10)
 worst_profiting_branches = profit_df.tail(10)
 
+
+# CHART CREATION
+
 # creating bar charts for profit section
 best_profit_figure = ex.bar(best_profiting_branches,
                             x='county',
@@ -62,8 +73,13 @@ worst_profit_figure = ex.bar(worst_profiting_branches,
                             color='county',
                             title='worst 10 profitable branches')
 
+
+
+
 #-----------------------
+#
 #           dash
+#
 #-----------------------
 
 
@@ -86,6 +102,8 @@ server = app.server
 # LAYOUT
 
 app.layout = dbc.Container([
+  
+  
     # TITLE & INFO ROW
     dbc.Row([
         # column containing the title
@@ -158,6 +176,7 @@ app.layout = dbc.Container([
                         placeholder='please pick to see products or product categories',
                         className='mb-5'
                     ),
+                  # small section informing about results
                     html.P(
                         children='',
                         id='first-section-results-info',
@@ -166,7 +185,7 @@ app.layout = dbc.Container([
                 ],
                 width=4
                 ),
-
+                # column containing the chart
                 dbc.Col([
                     dcc.Graph(id='product-fig', figure={})
                 ],
@@ -184,8 +203,11 @@ app.layout = dbc.Container([
     justify='center'
     ),
 
+  
+  
     # PERFORMANCE SECTION
     dbc.Row([
+      # btn used to collapse & open performance section
         dbc.Button(
             'performance of regions AND the best, worst performed branches',
             'performance-collapse-btn',
@@ -193,6 +215,7 @@ app.layout = dbc.Container([
             color='success',
             n_clicks=0
         ),
+      # collapsing section
         dbc.Collapse([
             dbc.Row([
                 # dropdown checking if you wish for the region or the counties
@@ -214,8 +237,10 @@ app.layout = dbc.Container([
         is_open=False)
     ]),
 
+  
     # TOP 10 COUNTIES HOURLY SALES SECTION
     dbc.Row([
+      # btn to hide and reveal actual section
         dbc.Button(
             'top 10 counties hourly sales',
             'hourly-collapse-btn',
@@ -223,6 +248,7 @@ app.layout = dbc.Container([
             color='primary',
             n_clicks=0
         ),
+      # collapsable section
         dbc.Collapse([
             dbc.Row([
                 # dropdown checking which county you wish to check
@@ -234,8 +260,18 @@ app.layout = dbc.Container([
                         ],
                         placeholder='please pick a county'
                     ),
-                    # graph to display performance of counties or regions
-                    dcc.Graph(id='hourly-fig', figure={}, className='mb-5')
+              # dropdown checking what type of chart you wish to be presented with
+                dcc.Dropdown(
+                        id='chart-select-dropdown-hourly',
+                        options=[
+                        {'label': 'Pie', 'value': 'pie'},
+                        {'label': 'Line', 'value': 'line'},
+                        {'label': 'Bar', 'value': 'bar'}   
+                        ],
+                        placeholder='please pick a chart type'
+                    ),
+                # graph to display performance of counties or regions
+                dcc.Graph(id='hourly-fig', figure={}, className='mb-5')
             ],
             className='mb-5'
             )
@@ -244,8 +280,11 @@ app.layout = dbc.Container([
         is_open=False)
     ]),
 
+  
+  
     # BEST AND WORST PROFITING BRANCHES SECTION
     dbc.Row([
+      # btn to hide and show actual section
         dbc.Button(
             'best & worst profiting counties',
             'profit-collapse-btn',
@@ -253,8 +292,10 @@ app.layout = dbc.Container([
             color='secondary',
             n_clicks=0
         ),
+      # collapsable section
         dbc.Collapse([
             dbc.Row([
+              # the graphs splitting the best & worst branches
                 dbc.Col([dcc.Graph(id='best-profit-graph', figure=best_profit_figure)]),
                 dbc.Col([dcc.Graph(id='worst-profit-graph', figure=worst_profit_figure)])
             ])
@@ -270,7 +311,9 @@ fluid=True
 
 
 #------------------
+#
 #       Callbacks
+#
 #------------------
 
 # PRODUCT & PRODUCT CATEGORY SECTION
@@ -296,17 +339,23 @@ def toggle_collapse(n, is_open):
 )
 # func attached to callback
 def toggle_region_or_county(selection):
+  # if they selected to see all regions
     if selection == 'region':
+      # return options for dropdown based on the unique regions
         return [
             {'label': x, 'value': x}
                 for x in regional_products_df['region'].unique()
         ]
+      # if they wished to see county instead
     elif selection =='county':
+      # return options for dropdown based on the unique counties
         return [
             {'label': x, 'value': x}
                 for x in county_products_df['county'].unique()
         ]
-    else:
+      # if they have not yet selected region or county
+      else:
+        # return an empty option section
         return []
 
 
@@ -321,25 +370,30 @@ def toggle_region_or_county(selection):
 )
 # func attached to callback
 def define_product_graph(first_selection, second_selection, last_selection):
+  
     # if the user has not yet selected a specific region or county
     if first_selection == None or second_selection == None or last_selection == None:
+      
+      # return nothing, stating nothing has been chosen also
         return {}, 'Nothing has been selected yet..'
+      
         # USER CHOSE PER REGION
         # if user has picked to see a specific region's products
     elif first_selection == 'region' and second_selection == 'products' and last_selection != None:
         # filter regional df based on the users selection
         filtered_df = regional_products_df[regional_products_df.region == last_selection]
-        # create a pie chart showing the percentages 
+        # create a chart showing the percentages 
         figure = ex.bar(filtered_df, 
                 x='product',
                 y='total_quantity_purchased',
                 color='product',
                 title=f"{last_selection}'s best 5 & worst 5 products overall",
                 )
-
+      # return the figure with a statement
         return figure, f"Here we can see the 5 best products & the 5 worst. \n \
                         Hover over to see total amount sold. \n \
                         Click on key to the right to remove products"
+      
     # if they chose regional prod categories
     elif first_selection == 'region' and second_selection == 'prod-cat' and last_selection != None:
         # filter regional prod_categories based
@@ -351,10 +405,11 @@ def define_product_graph(first_selection, second_selection, last_selection):
                 color='product_category',
                 title=f"{last_selection}'s product category sales overall",
                 )
-
+        # return the figure and a statement
         return figure, f"Here we can see the spread of sales for each product category. \n \
                         Hover over to for further details \n \
                         Click on key to the right to remove one or more of the categories"
+        
         
     # USER CHOSE PER COUNTY
     # if user picked to see products per county
@@ -368,10 +423,11 @@ def define_product_graph(first_selection, second_selection, last_selection):
                 color='product',
                 title=f"{last_selection}'s best & worst products",
                 )
-            
+            # return figure with a statement
         return figure, 'Here we can see the spread of sales for the top 5 and worst 5 products. \n \
                         Hover over for further details \n \
                         Click on key to the right to remove products'
+      
     # if user has picked prod category per county 
     elif first_selection == 'county' and second_selection == 'prod-cat' and last_selection != None:
         # filter county df based on users selection
@@ -383,7 +439,7 @@ def define_product_graph(first_selection, second_selection, last_selection):
                 color='product_category',
                 title=f"{last_selection}'s product category sales overall",
                 )
-            
+            # return the figure with a statement
         return figure, 'Here we can see the spread of sales based on the product categories. \n \
                         Hover over for further details.. \n \
                         Click on key to the right to remove products'
@@ -411,20 +467,27 @@ def toggle_collapse(n, is_open):
     Input('reg-or-county-dropdown-performance', 'value')
 )
 def define_performance_graph(selection):
+  # if nothing has been selected yet
     if selection == None:
+      # return empty figure
         return {}
+      # if they have selected region
     elif selection == 'region':
+      # create a figure based on regional performance df
         figure = ex.bar(regional_performance,x='region',
                         y=['total_quantity_purchased','amount_in_gbp'],
                         title='Regional Performance',
-                        color='region')
-
+                        color='region', labels={'value': 'quantity sold & money made'})
+      # return figure
         return figure
+      # if they selection is not none and not region... it must be county
     else:
+      # create a bar chart based on counties
         figure = ex.bar(counties_performance,'county',
                         ['total_quantity_purchased', 'amount_in_gbp'],
-                        'county', title='the 10 best and 10 worst performed counties')
-
+                        'county', title='the 10 best and 10 worst performed counties',
+                        labels={'value': 'quantity sold & money made'})
+      # return this figure
         return figure
 
 
@@ -446,18 +509,35 @@ def toggle_collapse(n, is_open):
 @app.callback(
     Output('hourly-fig','figure'),
 
-    Input('county-dropdown-hourly','value')
+    Input('county-dropdown-hourly','value'),
+    Input('chart-select-dropdown-hourly','value')
 )
-def define_hourly_graph(selection):
-    if selection == None:
-        return {}
+def define_hourly_graph(county_selection, chart_selection):
+  # if the user has selected a county & the chart type
+    if county_selection != None and chart_selection != None:
+        filtered_df = hourly_sales_of_best_counties[hourly_sales_of_best_counties.county == county_selection]
+      
+      # check what chart type the user has selected... create and display it
+        if chart_selection == 'bar':
+            figure = ex.bar(filtered_df,'hour','total_quantity_purchased','hour',title=f'sales made per hour for {county_selection}')
+
+            return figure
+        elif chart_selection == 'pie':
+            figure = ex.pie(filtered_df, names='hour', values='total_quantity_purchased', color='hour', title=f'hourly sales for {county_selection}')
+            figure.update_traces(textposition='outside', textinfo='percent+label')
+
+            return figure
+        else:
+            figure = ex.line(filtered_df,x='hour',y='total_quantity_purchased', title=f'hourly sales for {county_selection}')
+
+            return figure
+        # if they've not selected a county and chart
     else:
-        filtered_df = hourly_sales_of_best_counties[hourly_sales_of_best_counties.county == selection]
-        figure = ex.bar(filtered_df,'hour','total_quantity_purchased','hour',title=f'sales made per hour for {selection}')
-
-        return figure
-
-
+      # return an empty object
+        return {}
+      
+      
+      
 # PROFITTING SECTION
 
 # toggle collapse call back for hourly section
@@ -474,4 +554,4 @@ def toggle_collapse(n, is_open):
 # run server
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=3000)
