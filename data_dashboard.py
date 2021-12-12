@@ -349,7 +349,7 @@ def toggle_region_or_county(selection):
                 for x in county_products_df['county'].unique()
         ]
       # if they have not yet selected region or county
-     else:
+    else:
         # return an empty option section
         return []
 
