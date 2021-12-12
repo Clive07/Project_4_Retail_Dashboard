@@ -547,4 +547,5 @@ def toggle_collapse(n, is_open):
     return is_open
 
 # run server
-app.run_server(debug=True)
+if __name__ == '__main__':
+    app.run_server(debug=True)
